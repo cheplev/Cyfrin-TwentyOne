@@ -6,12 +6,12 @@ import {TwentyOne} from "../src/TwentyOne.sol";
 
 contract TwentyOneTest is Test {
     TwentyOne public twentyOne;
-
     address player1 = address(0x123);
     address player2 = address(0x456);
 
     function setUp() public {
         twentyOne = new TwentyOne();
+        vm.deal(address(twentyOne), 10 ether);
         vm.deal(player1, 10 ether); // Fund player1 with 10 ether
         vm.deal(player2, 10 ether); // Fund player2 with 10 ether
     }
@@ -57,7 +57,6 @@ contract TwentyOneTest is Test {
         vm.startPrank(player1); // Start acting as player1
 
         twentyOne.startGame{value: 1 ether}();
-
         // Mock the dealer's behavior to ensure player wins
         // Simulate dealer cards by manipulating state
         vm.mockCall(
@@ -77,4 +76,5 @@ contract TwentyOneTest is Test {
 
         vm.stopPrank();
     }
+
 }
